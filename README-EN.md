@@ -4,6 +4,12 @@ Copyright ownership: coralhymn | 琴海奶油
 
 Open-source protocol: GPL-2.0
 
+<div align="center">
+
+### [🇺🇸 English](README_EN.md) | [🇨🇳 简体中文](README.md)
+
+</div>
+
 Function: Perform obfuscation processing on specified file types, making a specific file recognized by the system as a folder
 
 # Usage instructions:

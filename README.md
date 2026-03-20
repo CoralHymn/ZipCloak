@@ -4,7 +4,11 @@
 
 开源协议:GPL-2.0
 
+<div align="center">
 
+### [🇺🇸 English](README_EN.md) | [🇨🇳 简体中文](README.md)
+
+</div>
 
 功能：对指定类型的文件进行混淆处理，使得某个文件被系统认为是文件夹
 
@@ -35,9 +39,6 @@
 本项目基于我的个人项目 https://github.com/CoralHymn/RWMP2_Decryptor 的基础上进行修改
 
 若您是需要对[RWMP2]加密的文件进行解密请勿使用此工具，请使用上方的专属版本！！
-
-
-
 
 
 
