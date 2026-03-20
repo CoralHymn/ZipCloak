@@ -1,25 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""通用工具函数"""
-import hashlib
-
-
-def calculate_file_hash(file_path: str) -> str:
-    """计算文件 SHA256 哈希值"""
-    sha256 = hashlib.sha256()
-    with open(file_path, 'rb') as f:
-        for block in iter(lambda: f.read(4096), b""):
-            sha256.update(block)
-    return sha256.hexdigest()[:12]
-
-
-def hex_to_bytes(hex_str: str) -> bytes:
-    """将 16 进制字符串转换为字节，例如："2E 74 78 74 2F" → b".txt/" """
-    hex_parts = hex_str.split()
-    return bytes(int(h, 16) for h in hex_parts)
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+"""此模块由QwenAI生成"""
 """多语言支持模块"""
 import os
 import json

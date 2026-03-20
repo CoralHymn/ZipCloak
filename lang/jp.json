@@ -1,0 +1,53 @@
+{
+  "app_title": "ZipCloak - ZIP ファイル難読化ツール",
+  "tab_obfuscate": "🔒 難読化モード",
+  "tab_restore": "🔓 復元モード",
+  "tab_about": "このソフトウェアについて",
+  "tab_license": "LICENSE | オープンソースライセンス",
+  "status_ready": "準備完了 | モードを選択して開始",
+  "status_obfuscating": "難読化中...",
+  "status_restoring": "復元中...",
+  "status_obfuscate_done": "✓ 難読化完了",
+  "status_restore_done": "✓ 復元完了",
+  "status_obfuscate_fail": "✗ 難読化失敗",
+  "status_restore_fail": "✗ 復元失敗",
+  
+  "label_source": "📁 ソースフォルダー:",
+  "label_output_zip": "📦 出力 ZIP:",
+  "label_obf_suffix": "🎯 難読化接尾辞:",
+  "label_compress": "🗜️ 圧縮を有効化",
+  "label_input_zip": "📥 難読化 ZIP:",
+  "label_output_dir": "📤 出力ディレクトリ:",
+  "label_restore_suffix": "🎯 復元接尾辞:",
+  "label_custom": "カスタム:",
+  "label_log": "📜 実行ログ:",
+  
+  "btn_browse": "参照...",
+  "btn_save_as": "名前を付けて保存...",
+  "btn_select": "選択...",
+  "btn_add": "追加",
+  "btn_select_all": "すべて選択",
+  "btn_clear": "クリア",
+  "btn_start_obfuscate": "▶ 難読化を開始",
+  "btn_start_restore": "▶ 復元を開始",
+  
+  "msg_param_missing": "パラメータ不足",
+  "msg_fill_path": "ソースフォルダーと出力 ZIP のパスを入力してください",
+  "msg_fill_input_output": "入力 ZIP と出力ディレクトリを入力してください",
+  "msg_no_suffix_title": "確認",
+  "msg_no_suffix_obf": "接尾辞が選択されていません。サポートされているすべてのファイルを難読化しますか？\n【はい】をクリックして続行、【いいえ】をクリックしてキャンセル",
+  "msg_no_suffix_rst": "接尾辞が選択されていません。サポートされているすべての拡張子を復元しますか？\n【はい】をクリックして続行、【いいえ】をクリックしてキャンセル",
+  "msg_success": "成功",
+  "msg_obf_done": "難読化完了!\n出力：{output}\nハッシュ：{hash}",
+  "msg_restore_done": "復元完了!\n出力ディレクトリ：{output_dir}",
+  "msg_error": "エラー",
+  "msg_obf_fail": "難読化に失敗しました:\n{error}",
+  "msg_restore_fail": "復元に失敗しました:\n{error}",
+  
+  "log_add_suffix": "✓ カスタム接尾辞を追加しました：{ext}",
+  "log_error": "❌ エラー：{error}",
+  
+  "about_text": "\nこのソフトウェアについて | 著作権：coralhymn\nZipCloak - zip ファイル難読化ツール\n",
+  
+  "about_detail": "\nZipCloak - zip ファイル難読化ツール\n\n\nウェブサイト：https://coralhymn.com\nソースコード：https://github.com/coralhymn/ZipCloak\n著作権：coralhymn | 琴海百一\nライセンス：GPL-2.0\n\nバージョン：1.0.0\n機能：指定されたファイルタイプを難読化し、フォルダーとして表示させる\n\n使用方法:\n[難読化モード]\n1. [難読化] タブでソースフォルダーと出力 ZIP ファイルの場所を選択\n2. 難読化するファイル拡張子を選択\n3. [難読化を開始] をクリックして暗号化 ZIP ファイルを生成\n[復元モード]\n1. [復元] タブで難読化された ZIP ファイルを選択\n2. 出力ディレクトリを設定し、[復元を開始] をクリック（ルートディレクトリは避けて、サブディレクトリを作成してください）\n[設定ファイル]\n初回実行時に、アプリケーションのルートディレクトリに設定ファイル zipcloak_config.json が自動的に生成されます。このファイルには設定情報が保存され、次回実行時に自動的に読み込まれます。\n[難読化モード] で追加したファイル拡張子は設定ファイルに保存されます。追加した拡張子を削除する場合は、このファイルを削除してください（JSON ファイルを直接編集することもできます）。\n\nこのプロジェクトは、私の個人プロジェクト [https://github.com/CoralHymn/RWMP2_Decryptor] を基に改変されています。\n[RWMP2] で暗号化されたファイルを復号する必要がある場合は、このツールではなく専用のバージョンを使用してください。\nこのプロジェクトに興味がある場合は、GitHub でスターを付けていただけると、私のモチベーションになります。\n\n注意事項:\n重要なファイルの難読化には使用しないでください。損失については一切責任を負いません。\n深いテストは実施していません。重要なファイルはバックアップを取ってから使用してください。\n\n\n"
+}

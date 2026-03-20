@@ -13,18 +13,41 @@ from config import load_config, save_config, DEFAULT_EXTENSIONS, PRESET_EXTENSIO
 from utils import calculate_file_hash
 from obfuscator import Obfuscator
 from restorer import Restorer
+from i18n import get_text, set_language, get_available_languages
 
 
 class ZipCloakGUI:
     def __init__(self, root):
         self.root = root
         self.config = load_config()
-        self.root.title("ZipCloak - ZIP 文件混淆工具")
+        
+        # 设置窗口图标
+        icon_path = os.path.join(os.path.dirname(__file__), 'icon.ico')
+        if os.path.exists(icon_path):
+            self.root.iconbitmap(icon_path)
+        
+        # 设置语言
+        lang = self.config.get('language', 'zh')
+        set_language(lang)
+        
+        self.root.title(get_text("app_title"))
         self.root.geometry("800x700")
         self.root.minsize(750, 650)
         
         style = ttk.Style()
         style.theme_use('clam')
+        
+        # 创建顶部工具栏框架用于放置语言选择器
+        toolbar_frame = ttk.Frame(root)
+        toolbar_frame.pack(fill='x', padx=10, pady=5)
+        
+        ttk.Label(toolbar_frame, text="🌐").pack(side='left', padx=5)
+        ttk.Label(toolbar_frame, text="Language / 语言:").pack(side='left', padx=5)
+        
+        self.lang_var = tk.StringVar(value=self.config.get('language', 'zh'))
+        lang_combo = ttk.Combobox(toolbar_frame, textvariable=self.lang_var, values=get_available_languages(), width=10, state='readonly')
+        lang_combo.pack(side='left', padx=5)
+        lang_combo.bind('<<ComboboxSelected>>', lambda e: self.change_language())
         
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill='both', expand=True, padx=10, pady=10)
@@ -34,10 +57,10 @@ class ZipCloakGUI:
         self.my_frame = ttk.Frame(self.notebook)
         self.LICENSE_frame = ttk.Frame(self.notebook)
 
-        self.notebook.add(self.obfuscate_frame, text='🔒 混淆模式')
-        self.notebook.add(self.restore_frame, text='🔓 恢复模式')
-        self.notebook.add(self.my_frame, text='关于此软件')
-        self.notebook.add(self.LICENSE_frame, text='LICENSE | 开源协议')
+        self.notebook.add(self.obfuscate_frame, text=get_text("tab_obfuscate"))
+        self.notebook.add(self.restore_frame, text=get_text("tab_restore"))
+        self.notebook.add(self.my_frame, text=get_text("tab_about"))
+        self.notebook.add(self.LICENSE_frame, text=get_text("tab_license"))
 
 
         self.setup_obfuscate_tab()
@@ -45,7 +68,7 @@ class ZipCloakGUI:
         self.setup_my_tab()
         self.setup_LICENSE_tab()
 
-        self.status_var = tk.StringVar(value="就绪 | 选择模式开始操作")
+        self.status_var = tk.StringVar(value=get_text("status_ready"))
         status_bar = ttk.Label(root, textvariable=self.status_var, relief='sunken', anchor='w')
         status_bar.pack(fill='x', side='bottom')
         
@@ -54,17 +77,17 @@ class ZipCloakGUI:
     def setup_obfuscate_tab(self):
         frame = self.obfuscate_frame
         
-        ttk.Label(frame, text="📁 源文件夹:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_source")).grid(row=0, column=0, sticky='w', padx=5, pady=5)
         self.obf_source_var = tk.StringVar()
         ttk.Entry(frame, textvariable=self.obf_source_var, width=55).grid(row=0, column=1, padx=5)
-        ttk.Button(frame, text="浏览...", command=self.browse_obf_source).grid(row=0, column=2, padx=5)
+        ttk.Button(frame, text=get_text("btn_browse"), command=self.browse_obf_source).grid(row=0, column=2, padx=5)
         
-        ttk.Label(frame, text="📦 输出 ZIP:").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_output_zip")).grid(row=1, column=0, sticky='w', padx=5, pady=5)
         self.obf_output_var = tk.StringVar()
         ttk.Entry(frame, textvariable=self.obf_output_var, width=55).grid(row=1, column=1, padx=5)
-        ttk.Button(frame, text="保存为...", command=self.save_obf_output).grid(row=1, column=2, padx=5)
+        ttk.Button(frame, text=get_text("btn_save_as"), command=self.save_obf_output).grid(row=1, column=2, padx=5)
         
-        ttk.Label(frame, text="🎯 混淆后缀:").grid(row=2, column=0, sticky='nw', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_obf_suffix")).grid(row=2, column=0, sticky='nw', padx=5, pady=5)
         suffix_frame = ttk.Frame(frame)
         suffix_frame.grid(row=2, column=1, columnspan=2, sticky='w')
         
@@ -82,24 +105,24 @@ class ZipCloakGUI:
         
         custom_frame = ttk.Frame(suffix_frame)
         custom_frame.pack(fill='x', pady=5)
-        ttk.Label(custom_frame, text="自定义:").pack(side='left')
+        ttk.Label(custom_frame, text=get_text("label_custom")).pack(side='left')
         self.obf_custom_var = tk.StringVar()
         ttk.Entry(custom_frame, textvariable=self.obf_custom_var, width=15).pack(side='left', padx=5)
-        ttk.Button(custom_frame, text="添加", command=self.add_obf_custom).pack(side='left', padx=2)
-        ttk.Button(custom_frame, text="全选", command=self.select_all_obf).pack(side='left', padx=10)
-        ttk.Button(custom_frame, text="清空", command=self.clear_all_obf).pack(side='left')
+        ttk.Button(custom_frame, text=get_text("btn_add"), command=self.add_obf_custom).pack(side='left', padx=2)
+        ttk.Button(custom_frame, text=get_text("btn_select_all"), command=self.select_all_obf).pack(side='left', padx=10)
+        ttk.Button(custom_frame, text=get_text("btn_clear"), command=self.clear_all_obf).pack(side='left')
         
         self.obf_compress_var = tk.BooleanVar(value=self.config.get('compress', True))
-        ttk.Checkbutton(frame, text="🗜️ 启用压缩", variable=self.obf_compress_var).grid(row=3, column=0, sticky='w', padx=5, pady=10)
+        ttk.Checkbutton(frame, text=get_text("label_compress"), variable=self.obf_compress_var).grid(row=3, column=0, sticky='w', padx=5, pady=10)
         
         self.obf_progress = ttk.Progressbar(frame, mode='determinate', length=500)
         self.obf_progress.grid(row=4, column=0, columnspan=3, padx=5, pady=5, sticky='ew')
         
         btn_frame = ttk.Frame(frame)
         btn_frame.grid(row=5, column=0, columnspan=3, pady=10)
-        ttk.Button(btn_frame, text="▶ 开始混淆", command=self.start_obfuscate).pack(side='left', padx=10)
+        ttk.Button(btn_frame, text=get_text("btn_start_obfuscate"), command=self.start_obfuscate).pack(side='left', padx=10)
         
-        ttk.Label(frame, text="📜 运行日志:").grid(row=6, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_log")).grid(row=6, column=0, sticky='w', padx=5, pady=5)
         self.obf_log = scrolledtext.ScrolledText(frame, height=15, width=90)
         self.obf_log.grid(row=7, column=0, columnspan=3, padx=5, pady=5, sticky='ew')
         frame.columnconfigure(1, weight=1)
@@ -107,17 +130,17 @@ class ZipCloakGUI:
     def setup_restore_tab(self):
         frame = self.restore_frame
         
-        ttk.Label(frame, text="📥 混淆 ZIP:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_input_zip")).grid(row=0, column=0, sticky='w', padx=5, pady=5)
         self.rst_input_var = tk.StringVar()
         ttk.Entry(frame, textvariable=self.rst_input_var, width=55).grid(row=0, column=1, padx=5)
-        ttk.Button(frame, text="浏览...", command=self.browse_rst_input).grid(row=0, column=2, padx=5)
+        ttk.Button(frame, text=get_text("btn_browse"), command=self.browse_rst_input).grid(row=0, column=2, padx=5)
         
-        ttk.Label(frame, text="📤 输出目录:").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_output_dir")).grid(row=1, column=0, sticky='w', padx=5, pady=5)
         self.rst_output_var = tk.StringVar()
         ttk.Entry(frame, textvariable=self.rst_output_var, width=55).grid(row=1, column=1, padx=5)
-        ttk.Button(frame, text="选择...", command=self.select_rst_output).grid(row=1, column=2, padx=5)
+        ttk.Button(frame, text=get_text("btn_select"), command=self.select_rst_output).grid(row=1, column=2, padx=5)
         
-        ttk.Label(frame, text="🎯 恢复后缀:").grid(row=2, column=0, sticky='nw', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_restore_suffix")).grid(row=2, column=0, sticky='nw', padx=5, pady=5)
         suffix_frame = ttk.Frame(frame)
         suffix_frame.grid(row=2, column=1, columnspan=2, sticky='w')
         
@@ -135,31 +158,28 @@ class ZipCloakGUI:
         
         custom_frame = ttk.Frame(suffix_frame)
         custom_frame.pack(fill='x', pady=5)
-        ttk.Label(custom_frame, text="自定义:").pack(side='left')
+        ttk.Label(custom_frame, text=get_text("label_custom")).pack(side='left')
         self.rst_custom_var = tk.StringVar()
         ttk.Entry(custom_frame, textvariable=self.rst_custom_var, width=15).pack(side='left', padx=5)
-        ttk.Button(custom_frame, text="添加", command=self.add_rst_custom).pack(side='left', padx=2)
-        ttk.Button(custom_frame, text="全选", command=self.select_all_rst).pack(side='left', padx=10)
-        ttk.Button(custom_frame, text="清空", command=self.clear_all_rst).pack(side='left')
+        ttk.Button(custom_frame, text=get_text("btn_add"), command=self.add_rst_custom).pack(side='left', padx=2)
+        ttk.Button(custom_frame, text=get_text("btn_select_all"), command=self.select_all_rst).pack(side='left', padx=10)
+        ttk.Button(custom_frame, text=get_text("btn_clear"), command=self.clear_all_rst).pack(side='left')
         
         self.rst_progress = ttk.Progressbar(frame, mode='determinate', length=500)
         self.rst_progress.grid(row=3, column=0, columnspan=3, padx=5, pady=5, sticky='ew')
         
         btn_frame = ttk.Frame(frame)
         btn_frame.grid(row=4, column=0, columnspan=3, pady=10)
-        ttk.Button(btn_frame, text="▶ 开始恢复", command=self.start_restore).pack(side='left', padx=10)
+        ttk.Button(btn_frame, text=get_text("btn_start_restore"), command=self.start_restore).pack(side='left', padx=10)
         
-        ttk.Label(frame, text="📜 运行日志:").grid(row=5, column=0, sticky='w', padx=5, pady=5)
+        ttk.Label(frame, text=get_text("label_log")).grid(row=5, column=0, sticky='w', padx=5, pady=5)
         self.rst_log = scrolledtext.ScrolledText(frame, height=15, width=90)
         self.rst_log.grid(row=6, column=0, columnspan=3, padx=5, pady=5, sticky='ew')
         frame.columnconfigure(1, weight=1)
 
     def setup_my_tab(self):
         frame = self.my_frame
-        about_text = """
-关于此软件 |  版权所属:coralhymn
-ZipCloak - zip文件混淆工具
-"""
+        about_text = get_text("about_text")
         about_label = tk.Label(
             frame, 
             text=about_text, 
@@ -169,40 +189,7 @@ ZipCloak - zip文件混淆工具
         )
         about_label.pack(fill='both', expand=True, padx=20, pady=20)
         
-        about2_text = """
-ZipCloak - zip文件混淆工具
-
-
-访问官网:https://coralhymn.com
-源码地址:https://github.com/coralhymn/ZipCloak
-版权所属:coralhymn | 琴海奶油
-开源协议:GPL-2.0
-
-当前版本:1.0.0
-功能：对指定类型的文件进行混淆处理，使得某个文件被系统认为是文件夹
-
-使用说明：
-[混淆模式]
-1. 在【混淆】选项卡中选择源文件夹和输出zip文件位置与设置名称
-2. 选择需要混淆的文件扩展名
-3. 点击开始混淆生成加密的 ZIP 文件
-[恢复模式]
-1. 在【恢复】选项卡中选择混淆后的 ZIP 文件
-2. 设置输出目录并点击开始恢复（请不要选择根目录，建议自行创建一个子目录）
-[配置文件]
-在首次运行时，会在软件根目录自动生成一个配置文件zipcloak_config.json，请勿随意删除此文件，此文件将保存您的配置信息，下次运行时将自动读取此文件
-您在[混淆模式]中添加的文件扩展名将保存在配置文件中，若需要删除您添加的文件扩展名请删除该文件即可（也可以对json文件进行修改）
-
-本项目基于我的个人项目[https://github.com/CoralHymn/RWMP2_Decryptor]的基础上进行修改
-若您是需要对[RWMP2]加密的文件进行解密请勿使用此工具，请使用上方的专属版本
-若您对此项目感兴趣不妨在GitHub跟我点一颗Star，这对我的动力将是无比强大
-
-注意事项：
-请勿使用此工具对重要文件进行混淆处理、本人对产生的损失不负任何责任
-本人未进行深度测试，在使用此工具时请对重要文件进行备份处理，防止文件丢失
-
-
-"""
+        about2_text = get_text("about_detail")
         
         license_text = scrolledtext.ScrolledText(
             frame,
@@ -522,7 +509,7 @@ the "copyright" line and a pointer to where the full notice is found.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License along
@@ -629,7 +616,7 @@ Public License instead of this License.
                         'fake_hex': generate_fake_hex(ext)
                     }
                     save_config(self.config)
-                self.log_obf(f"✓ 添加自定义后缀：{ext}")
+                self.log_obf(get_text("log_add_suffix", ext=ext))
                 self.obf_custom_var.set('')
 
     def add_rst_custom(self):
@@ -646,7 +633,7 @@ Public License instead of this License.
                         'fake_hex': generate_fake_hex(ext)
                     }
                     save_config(self.config)
-                self.log_rst(f"✓ 添加自定义后缀：{ext}")
+                self.log_rst(get_text("log_add_suffix", ext=ext))
                 self.rst_custom_var.set('')
 
     def select_all_obf(self):
@@ -672,22 +659,35 @@ Public License instead of this License.
             self.obf_output_var.set(self.config['last_output'])
             self.rst_output_var.set(self.config['last_output'])
 
+    def change_language(self):
+        """切换语言并刷新界面"""
+        lang = self.lang_var.get()
+        set_language(lang)
+        
+        # 保存语言设置到配置文件
+        self.config['language'] = lang
+        save_config(self.config)
+        
+        # 重新加载配置（这将在下次启动时生效）
+        # 注意：完全刷新界面需要重启应用，这里只更新部分文本
+        messagebox.showinfo("提示", "语言切换后请重启应用以完全生效\nLanguage will take effect after restart")
+
     def start_obfuscate(self):
         source = self.obf_source_var.get()
         output = self.obf_output_var.get()
         if not source or not output:
-            messagebox.showwarning("参数缺失", "请填写源文件夹和输出 ZIP 路径")
+            messagebox.showwarning(get_text("msg_param_missing"), get_text("msg_fill_path"))
             return
         
         selected_exts = self.get_selected_extensions(self.obf_preset_vars, self.obf_custom_var)
         if not selected_exts:
-            if not messagebox.askyesno("确认", "未选择任何后缀，将混淆所有支持的文件？\n点击【是】继续，【否】取消"):
+            if not messagebox.askyesno(get_text("msg_no_suffix_title"), get_text("msg_no_suffix_obf")):
                 return
             selected_exts = list(DEFAULT_EXTENSIONS.keys())
         
         self.obf_log.delete('1.0', 'end')
         self.obf_progress['value'] = 0
-        self.status_var.set("正在混淆...")
+        self.status_var.set(get_text("status_obfuscating"))
         
         def run():
             try:
@@ -695,8 +695,8 @@ Public License instead of this License.
                 obf.create(source, output, self.obf_compress_var.get(),
                           lambda p: self.root.after(0, lambda: self.obf_progress.config(value=p)))
                 self.root.after(0, lambda: [
-                    self.status_var.set("✓ 混淆完成"),
-                    messagebox.showinfo("成功", f"混淆完成!\n输出：{output}\n哈希：{calculate_file_hash(output)}")
+                    self.status_var.set(get_text("status_obfuscate_done")),
+                    messagebox.showinfo(get_text("msg_success"), get_text("msg_obf_done", output=output, hash=calculate_file_hash(output)))
                 ])
                 self.config.update({'last_source': source, 'last_output': output, 
                                    'compress': self.obf_compress_var.get()})
@@ -704,10 +704,10 @@ Public License instead of this License.
             except Exception as e:
                 import traceback
                 self.root.after(0, lambda: [
-                    self.status_var.set("✗ 混淆失败"),
-                    messagebox.showerror("错误", f"混淆失败:\n{e}")
+                    self.status_var.set(get_text("status_obfuscate_fail")),
+                    messagebox.showerror(get_text("msg_error"), get_text("msg_obf_fail", error=e))
                 ])
-                self.log_obf(f"❌ 错误：{e}")
+                self.log_obf(get_text("log_error", error=e))
                 self.log_obf(traceback.format_exc())
         
         threading.Thread(target=run, daemon=True).start()
@@ -716,18 +716,18 @@ Public License instead of this License.
         zip_file = self.rst_input_var.get()
         output_dir = self.rst_output_var.get()
         if not zip_file or not output_dir:
-            messagebox.showwarning("参数缺失", "请填写输入 ZIP 和输出目录")
+            messagebox.showwarning(get_text("msg_param_missing"), get_text("msg_fill_input_output"))
             return
         
         selected_exts = self.get_selected_extensions(self.rst_preset_vars, self.rst_custom_var)
         if not selected_exts:
-            if not messagebox.askyesno("确认", "未选择任何后缀，将恢复所有支持的扩展名？\n点击【是】继续，【否】取消"):
+            if not messagebox.askyesno(get_text("msg_no_suffix_title"), get_text("msg_no_suffix_rst")):
                 return
             selected_exts = list(DEFAULT_EXTENSIONS.keys())
         
         self.rst_log.delete('1.0', 'end')
         self.rst_progress['value'] = 0
-        self.status_var.set("正在恢复...")
+        self.status_var.set(get_text("status_restoring"))
         
         def run():
             try:
@@ -735,16 +735,16 @@ Public License instead of this License.
                 rst.restore(zip_file, output_dir, False,
                            lambda p: self.root.after(0, lambda: self.rst_progress.config(value=p)))
                 self.root.after(0, lambda: [
-                    self.status_var.set("✓ 恢复完成"),
-                    messagebox.showinfo("成功", f"恢复完成!\n输出目录：{output_dir}")
+                    self.status_var.set(get_text("status_restore_done")),
+                    messagebox.showinfo(get_text("msg_success"), get_text("msg_restore_done", output_dir=output_dir))
                 ])
             except Exception as e:
                 import traceback
                 self.root.after(0, lambda: [
-                    self.status_var.set("✗ 恢复失败"),
-                    messagebox.showerror("错误", f"恢复失败:\n{e}")
+                    self.status_var.set(get_text("status_restore_fail")),
+                    messagebox.showerror(get_text("msg_error"), get_text("msg_restore_fail", error=e))
                 ])
-                self.log_rst(f"❌ 错误：{e}")
+                self.log_rst(get_text("log_error", error=e))
                 self.log_rst(traceback.format_exc())
-        
+
         threading.Thread(target=run, daemon=True).start()

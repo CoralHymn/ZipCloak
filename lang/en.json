@@ -1,0 +1,53 @@
+{
+  "app_title": "ZipCloak - ZIP File Obfuscation Tool",
+  "tab_obfuscate": "🔒 Obfuscate Mode",
+  "tab_restore": "🔓 Restore Mode",
+  "tab_about": "About",
+  "tab_license": "LICENSE | Open Source",
+  "status_ready": "Ready | Select mode to start",
+  "status_obfuscating": "Obfuscating...",
+  "status_restoring": "Restoring...",
+  "status_obfuscate_done": "✓ Obfuscation Complete",
+  "status_restore_done": "✓ Restoration Complete",
+  "status_obfuscate_fail": "✗ Obfuscation Failed",
+  "status_restore_fail": "✗ Restoration Failed",
+  
+  "label_source": "📁 Source Folder:",
+  "label_output_zip": "📦 Output ZIP:",
+  "label_obf_suffix": "🎯 Obfuscate Suffix:",
+  "label_compress": "🗜️ Enable Compression",
+  "label_input_zip": "📥 Obfuscated ZIP:",
+  "label_output_dir": "📤 Output Directory:",
+  "label_restore_suffix": "🎯 Restore Suffix:",
+  "label_custom": "Custom:",
+  "label_log": "📜 Log:",
+  
+  "btn_browse": "Browse...",
+  "btn_save_as": "Save As...",
+  "btn_select": "Select...",
+  "btn_add": "Add",
+  "btn_select_all": "Select All",
+  "btn_clear": "Clear",
+  "btn_start_obfuscate": "▶ Start Obfuscation",
+  "btn_start_restore": "▶ Start Restoration",
+  
+  "msg_param_missing": "Missing Parameters",
+  "msg_fill_path": "Please fill in source folder and output ZIP path",
+  "msg_fill_input_output": "Please fill in input ZIP and output directory",
+  "msg_no_suffix_title": "Confirm",
+  "msg_no_suffix_obf": "No suffix selected, will obfuscate all supported files?\nClick [Yes] to continue, [No] to cancel",
+  "msg_no_suffix_rst": "No suffix selected, will restore all supported extensions?\nClick [Yes] to continue, [No] to cancel",
+  "msg_success": "Success",
+  "msg_obf_done": "Obfuscation Complete!\nOutput: {output}\nHash: {hash}",
+  "msg_restore_done": "Restoration Complete!\nOutput Directory: {output_dir}",
+  "msg_error": "Error",
+  "msg_obf_fail": "Obfuscation Failed:\n{error}",
+  "msg_restore_fail": "Restoration Failed:\n{error}",
+  
+  "log_add_suffix": "✓ Added custom suffix: {ext}",
+  "log_error": "❌ Error: {error}",
+  
+  "about_text": "\nAbout | Copyright: coralhymn\nZipCloak - zip file obfuscation tool\n",
+  
+  "about_detail": "\nZipCloak - zip file obfuscation tool\n\n\nWebsite: https://coralhymn.com\nSource Code: https://github.com/coralhymn/ZipCloak\nCopyright: coralhymn | 琴海奶油\nLicense: GPL-2.0\n\nVersion: 1.0.0\nFunction: Obfuscate specified file types to make them appear as folders\n\nInstructions:\n[Obfuscate Mode]\n1. Select source folder and output ZIP file location in the Obfuscate tab\n2. Choose file extensions to obfuscate\n3. Click Start Obfuscation to generate encrypted ZIP file\n[Restore Mode]\n1. Select the obfuscated ZIP file in the Restore tab\n2. Set output directory and click Start Restore (do not select root directory, create a subdirectory instead)\n[Configuration File]\nOn first run, a configuration file zipcloak_config.json will be automatically generated in the application root directory. Do not delete this file as it stores your settings and will be loaded on next run.\nFile extensions added in Obfuscate Mode will be saved in the configuration file. To remove added extensions, delete this file (or modify the JSON file directly).\n\nThis project is modified from my personal project [https://github.com/CoralHymn/RWMP2_Decryptor]\nIf you need to decrypt files encrypted with [RWMP2], please use the dedicated version above instead of this tool.\nIf you're interested in this project, feel free to give me a Star on GitHub, which will be a great motivation for me.\n\nNotes:\nDo not use this tool to obfuscate important files. I am not responsible for any losses.\nI have not conducted in-depth testing. Please backup important files when using this tool to prevent data loss.\n\n\n"
+}

@@ -1,0 +1,53 @@
+{
+  "app_title": "ZipCloak - ZIP 文件混淆工具",
+  "tab_obfuscate": "🔒 混淆模式",
+  "tab_restore": "🔓 恢复模式",
+  "tab_about": "关于此软件",
+  "tab_license": "LICENSE | 开源协议",
+  "status_ready": "就绪 | 选择模式开始操作",
+  "status_obfuscating": "正在混淆...",
+  "status_restoring": "正在恢复...",
+  "status_obfuscate_done": "✓ 混淆完成",
+  "status_restore_done": "✓ 恢复完成",
+  "status_obfuscate_fail": "✗ 混淆失败",
+  "status_restore_fail": "✗ 恢复失败",
+  
+  "label_source": "📁 源文件夹:",
+  "label_output_zip": "📦 输出 ZIP:",
+  "label_obf_suffix": "🎯 混淆后缀:",
+  "label_compress": "🗜️ 启用压缩",
+  "label_input_zip": "📥 混淆 ZIP:",
+  "label_output_dir": "📤 输出目录:",
+  "label_restore_suffix": "🎯 恢复后缀:",
+  "label_custom": "自定义:",
+  "label_log": "📜 运行日志:",
+  
+  "btn_browse": "浏览...",
+  "btn_save_as": "保存为...",
+  "btn_select": "选择...",
+  "btn_add": "添加",
+  "btn_select_all": "全选",
+  "btn_clear": "清空",
+  "btn_start_obfuscate": "▶ 开始混淆",
+  "btn_start_restore": "▶ 开始恢复",
+  
+  "msg_param_missing": "参数缺失",
+  "msg_fill_path": "请填写源文件夹和输出 ZIP 路径",
+  "msg_fill_input_output": "请填写输入 ZIP 和输出目录",
+  "msg_no_suffix_title": "确认",
+  "msg_no_suffix_obf": "未选择任何后缀，将混淆所有支持的文件？\n点击【是】继续，【否】取消",
+  "msg_no_suffix_rst": "未选择任何后缀，将恢复所有支持的扩展名？\n点击【是】继续，【否】取消",
+  "msg_success": "成功",
+  "msg_obf_done": "混淆完成!\n输出：{output}\n哈希：{hash}",
+  "msg_restore_done": "恢复完成!\n输出目录：{output_dir}",
+  "msg_error": "错误",
+  "msg_obf_fail": "混淆失败:\n{error}",
+  "msg_restore_fail": "恢复失败:\n{error}",
+  
+  "log_add_suffix": "✓ 添加自定义后缀：{ext}",
+  "log_error": "❌ 错误：{error}",
+  
+  "about_text": "\n关于此软件 |  版权所属:coralhymn\nZipCloak - zip 文件混淆工具\n",
+  
+  "about_detail": "\nZipCloak - zip 文件混淆工具\n\n\n访问官网:https://coralhymn.com\n源码地址:https://github.com/coralhymn/ZipCloak\n版权所属:coralhymn | 琴海奶油\n开源协议:GPL-2.0\n\n当前版本:1.0.0\n功能：对指定类型的文件进行混淆处理，使得某个文件被系统认为是文件夹\n\n使用说明：\n[混淆模式]\n1. 在【混淆】选项卡中选择源文件夹和输出 zip 文件位置与设置名称\n2. 选择需要混淆的文件扩展名\n3. 点击开始混淆生成加密的 ZIP 文件\n[恢复模式]\n1. 在【恢复】选项卡中选择混淆后的 ZIP 文件\n2. 设置输出目录并点击开始恢复（请不要选择根目录，建议自行创建一个子目录）\n[配置文件]\n在首次运行时，会在软件根目录自动生成一个配置文件 zipcloak_config.json，请勿删除此文件，此文件将保存您的配置信息，下次运行时将自动读取此文件\n您在 [混淆模式] 中添加的文件扩展名将保存在配置文件中，若需要删除您添加的文件扩展名请删除该文件即可（也可以对 json 文件进行修改）\n\n本项目基于我的个人项目 [https://github.com/CoralHymn/RWMP2_Decryptor] 的基础上进行修改\n若您是需要对 [RWMP2] 加密的文件进行解密请勿使用此工具，请使用上方的专属版本\n若您对此项目感兴趣不妨在 GitHub 跟我点一颗 Star，这对我的动力将是无比强大\n\n注意事项：\n请勿使用此工具对重要文件进行混淆处理、本人对产生的损失不负任何责任\n本人未进行深度测试，在使用此工具时请对重要文件进行备份处理，防止文件丢失\n\n\n"
+}

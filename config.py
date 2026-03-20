@@ -29,7 +29,8 @@ DEFAULT_CONFIG = {
     "extensions": DEFAULT_EXTENSIONS.copy(),
     "last_source": "",
     "last_output": "",
-    "compress": True
+    "compress": True,
+    "language": "zh"
 }
 
 PRESET_EXTENSIONS = list(DEFAULT_EXTENSIONS.keys())
@@ -54,7 +55,7 @@ def load_config() -> dict:
                         info["fake_hex"] = generate_fake_hex(ext)
                         print(f"🔧 自动修复配置：{ext} 添加 fake_hex")
                     config["extensions"][ext] = info
-            for key in ["last_source", "last_output", "compress"]:
+            for key in ["last_source", "last_output", "compress", "language"]:
                 if key in loaded:
                     config[key] = loaded[key]
         except Exception as e:
